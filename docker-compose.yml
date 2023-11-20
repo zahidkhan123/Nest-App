@@ -1,0 +1,17 @@
+version: "3.8"
+
+services:
+  dbMysql:
+    image: mysql:8.0.23
+    restart: always
+    ports:
+      - 3306:3306
+    environment:
+      MYSQL_ROOT_PASSWORD: password
+      MYSQL_DATABASE: eventsnest
+
+  adminer:
+    image: adminer
+    restart: always
+    ports:
+      - 8080:8080
