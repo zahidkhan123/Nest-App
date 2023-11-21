@@ -3,8 +3,6 @@ import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from "typeorm";
 import { Experience } from '../experience/experience.entity'
 import { UsersContactDetailsEntity } from '../user_contacts_details/user_contact_detail_entity'
 
-
-
 @Entity('users')
 export class usersEntity {
     @PrimaryGeneratedColumn()

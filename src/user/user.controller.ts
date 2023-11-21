@@ -19,7 +19,8 @@ export class UserController {
 
     @Get('')
     async findAll() {
-        return await this.respositry.find();
+        const users = await this.UserService.getUsersWithPaginateed({ total: true, currentPage: 1, limit: 2 });
+        return users
     }
     @Get('/:id')
     async findOne(@Param("id") id) {
