@@ -16,6 +16,9 @@ export class usersEntity {
     @Column()
     gender: string
 
+    @Column()
+    password: string
+
     @OneToMany(() => Experience, (experience) => experience.user)
     experiences: Experience[];
 

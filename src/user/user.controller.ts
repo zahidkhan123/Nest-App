@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 /* eslint-disable prettier/prettier */
 
-import { Body, Controller, Get, Injectable, Param, Post } from "@nestjs/common";
+import { Body, Controller, Get, Injectable, Param, Post, Query } from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
 import { Repository } from "typeorm";
 import { usersEntity } from "./user.entity";
@@ -18,8 +18,8 @@ export class UserController {
     ) { }
 
     @Get('')
-    async findAll() {
-        const users = await this.UserService.getUsersWithPaginateed({ total: true, currentPage: 1, limit: 2 });
+    async findAll(@Query('page') page: number = 1, @Query('limit') limit: number = 2) {
+        const users = await this.UserService.getUsersWithPaginateed({ total: false, currentPage: page, limit: +limit });
         return users
     }
     @Get('/:id')

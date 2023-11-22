@@ -12,6 +12,7 @@ import { UserContactsDetailsModule } from './user_contacts_details/user-contacts
 import ormConfig from './config/orm.config'
 import ormConfigProd from './config/orm.config.prod';
 import { SchoolModule } from './school/school.module';
+import { AuthModule } from './auth/auth.module';
 @Module({
   imports: [
     ConfigModule.forRoot({ isGlobal: true, load: [ormConfig], expandVariables: true, }),
@@ -20,7 +21,8 @@ import { SchoolModule } from './school/school.module';
     UserModule,
     ExperienceModule,
     UserContactsDetailsModule,
-    SchoolModule
+    SchoolModule,
+    AuthModule
   ],
   controllers: [AppController],
   providers: [{
