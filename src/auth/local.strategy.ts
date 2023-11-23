@@ -2,9 +2,9 @@ import { Injectable, Logger, UnauthorizedException } from "@nestjs/common";
 import { PassportStrategy } from "@nestjs/passport";
 import { InjectRepository } from "@nestjs/typeorm";
 import { Strategy } from "passport-local";
-import { usersEntity } from "../user/user.entity";
+import { usersEntity } from "./user.entity";
 import { Repository } from "typeorm";
-
+import * as bcrypt from 'bcrypt'
 @Injectable()
 export class LocalStrategy extends PassportStrategy(Strategy, "mystrategy") {
     private readonly logger = new Logger(LocalStrategy.name)
@@ -18,11 +18,11 @@ export class LocalStrategy extends PassportStrategy(Strategy, "mystrategy") {
         const user = await this.UserRepositry.findOne({ where: { name: username } })
 
         if (!user) {
-            this.logger.debug(`${username} not found`)
+
             throw new UnauthorizedException()
         }
 
-        if (password !== user.password) {
+        if (!(await bcrypt.compare(password, user.password))) {
             this.logger.debug(`Invalid creds`)
             throw new UnauthorizedException()
         }

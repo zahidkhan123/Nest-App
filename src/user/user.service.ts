@@ -1,7 +1,7 @@
 import { Injectable, Logger } from "@nestjs/common";
 import { PaginateOptions, paginate } from "./../pagination/paginator";
 import { Repository } from "typeorm";
-import { usersEntity } from "./user.entity";
+import { usersEntity } from "../auth/user.entity";
 import { InjectRepository } from "@nestjs/typeorm";
 import { Role } from "../experience/experience.entity";
 

@@ -1,5 +1,5 @@
 
-import { usersEntity } from "../user/user.entity";
+import { usersEntity } from "../auth/user.entity";
 import { Column, Entity, JoinColumn, ManyToOne, PrimaryGeneratedColumn } from "typeorm";
 
 @Entity('user_contact_details')

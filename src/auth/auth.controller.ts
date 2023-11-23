@@ -1,8 +1,11 @@
-import { Controller, Get, Post, Request, UseGuards } from "@nestjs/common";
+import { ClassSerializerInterceptor, Controller, Get, Post, SerializeOptions, UseGuards, UseInterceptors } from "@nestjs/common";
 import { AuthGuard } from "@nestjs/passport";
 import { AuthService } from "./auth.service";
+import { usersEntity } from "./user.entity";
+import { CurrentUser } from "./current-user.decorator";
 
 @Controller('auth')
+@SerializeOptions({ strategy: "excludeAll" })
 export class AuthController {
 
     constructor(
@@ -12,18 +15,29 @@ export class AuthController {
 
     @Post('/login')
     @UseGuards(AuthGuard('mystrategy'))
-    async login(@Request() request) {
+    async login(@CurrentUser() user: usersEntity) {
+
         return {
-            userId: request.user.id,
-            token: this.authService.getTokenForUser(request.user)
+            userId: user?.id,
+            accessToken: this.authService.getTokenForUser(user),
+            refreshToken: this.authService.getTokenForUser(user, "expiresIn")
         }
     }
 
     @Get('profile')
+    @UseInterceptors(ClassSerializerInterceptor)
     @UseGuards(AuthGuard('jwt'))
-    async getProfile(@Request() request) {
-        return request.user
+    async getProfile(@CurrentUser() user: usersEntity) {
+        return user
 
+    }
+
+    @UseGuards(AuthGuard('jwt-refresh'))
+    @Post('refresh')
+    async refreshToken(@CurrentUser() user: usersEntity) {
+        return {
+            accessToken: this.authService.getTokenForUser(user),
+        }
     }
 }
 

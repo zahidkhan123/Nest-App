@@ -2,7 +2,7 @@ import { registerAs } from "@nestjs/config";
 import { Experience } from "./../experience/experience.entity";
 import { TypeOrmModuleOptions } from "@nestjs/typeorm";
 import { EventEntity } from "../event/event.entity";
-import { usersEntity } from "../user/user.entity";
+import { usersEntity } from "../auth/user.entity";
 import { UsersContactDetailsEntity } from "../user_contacts_details/user_contact_detail_entity";
 
 export default registerAs('orm.config', (): TypeOrmModuleOptions => ({
